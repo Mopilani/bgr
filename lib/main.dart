@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/view_models/users_view_model.dart';
+import 'package:flutter_application_2/views/home_screen.dart';
+// ignore: library_prefixes
 import 'package:url_launcher/url_launcher.dart' as urlLancher;
+import 'package:provider/provider.dart';
 
 void main() => runApp(const MyApp());
 
@@ -8,10 +12,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: const MyHomePage(title: 'Flutter + Nima'),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => UsersViewModel(),
+        ),
+      ],
+      child: MaterialApp(
+        title: 'Flutter MVVM',
+        theme: ThemeData(primarySwatch: Colors.blue),
+        home: const HomeScreen(),
+      ),
     );
   }
 }
@@ -25,72 +36,69 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String _animationName = "idle";
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey,
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Stack(
-        children: <Widget>[
-          Positioned.fill(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  margin: const EdgeInsets.all(5.0),
-                  child: MaterialButton(
-                    textColor: Colors.white,
-                    color: Colors.blue,
-                    onPressed: () {
-                      urlLancher.launchUrl(Uri.parse('tel:+249-113-615012'));
-                    },
-                    child: const Text("Telphone"),
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.all(5.0),
-                  child: MaterialButton(
-                    textColor: Colors.white,
-                    color: Colors.blue,
-                    onPressed: () {
-                      urlLancher.launchUrl(Uri.parse('sms:113615012'));
-                    },
-                    child: const Text("SMS"),
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.all(5.0),
-                  child: MaterialButton(
-                    textColor: Colors.white,
-                    color: Colors.blue,
-                    onPressed: () {
-                      urlLancher.launchUrl(Uri.parse(
-                          'mailto:mopilani1@gmail.com?subject=News&body=New%20plugin'));
-                    },
-                    child: const Text("Email"),
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.all(5.0),
-                  child: MaterialButton(
-                    textColor: Colors.white,
-                    color: Colors.blue,
-                    onPressed: () {
-                      urlLancher.launchUrl(Uri.parse('file:/home'));
-                    },
-                    child: const Text("Folder"),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+      // body: Stack(
+      //   children: <Widget>[
+      //     Positioned.fill(
+      //       child: Row(
+      //         crossAxisAlignment: CrossAxisAlignment.end,
+      //         mainAxisAlignment: MainAxisAlignment.center,
+      //         children: <Widget>[
+      //           Container(
+      //             margin: const EdgeInsets.all(5.0),
+      //             child: MaterialButton(
+      //               textColor: Colors.white,
+      //               color: Colors.blue,
+      //               onPressed: () {
+      //                 urlLancher.launchUrl(Uri.parse('tel:+249-113-615012'));
+      //               },
+      //               child: const Text("Telphone"),
+      //             ),
+      //           ),
+      //           Container(
+      //             margin: const EdgeInsets.all(5.0),
+      //             child: MaterialButton(
+      //               textColor: Colors.white,
+      //               color: Colors.blue,
+      //               onPressed: () {
+      //                 urlLancher.launchUrl(Uri.parse('sms:113615012'));
+      //               },
+      //               child: const Text("SMS"),
+      //             ),
+      //           ),
+      //           Container(
+      //             margin: const EdgeInsets.all(5.0),
+      //             child: MaterialButton(
+      //               textColor: Colors.white,
+      //               color: Colors.blue,
+      //               onPressed: () {
+      //                 urlLancher.launchUrl(Uri.parse(
+      //                     'mailto:mopilani1@gmail.com?subject=News&body=New%20plugin'));
+      //               },
+      //               child: const Text("Email"),
+      //             ),
+      //           ),
+      //           Container(
+      //             margin: const EdgeInsets.all(5.0),
+      //             child: MaterialButton(
+      //               textColor: Colors.white,
+      //               color: Colors.blue,
+      //               onPressed: () {
+      //                 urlLancher.launchUrl(Uri.parse('file:/home'));
+      //               },
+      //               child: const Text("Folder"),
+      //             ),
+      //           ),
+      //         ],
+      //       ),
+      //     ),
+      //   ],
+      // ),
     );
   }
 }
