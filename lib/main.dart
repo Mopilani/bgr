@@ -1,3 +1,7 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/view_models/users_view_model.dart';
 import 'package:flutter_application_2/views/home_screen.dart';
@@ -14,6 +18,30 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var key = utf8.encode('p@ssw0rd');
+    var bytes = utf8.encode(
+      "AQAAAAAAAAAAAAAAAAAAAACHZDnaEzDcEa1uHpN7AqAMMMExIPFNFngP8oLkulwS9/D2fJ0JT13jw5peNaW/XeC/wjgIuWf4U0D5EvJoZ0Wk0GjX5fKuBmm+az/GXF53vaN48cSFt8mYJe7LLcSSVVf+b0KHTCKsbGwdDlW3Og3Lf2kYBKIFJUGhIVI6pyHAlLApUdZFK2AzhyCMh5e4i8sOmAN8A5KARRLFtlYrf2nEYo+paQ3oELLQnHnmdeYWZJus7h4hqk6YZd+xVOR5qvtnVGFQHZBW1ectXSnS6TO6kqT6hicQaaln9EIXHdWROv059IePDcv8HSdojogmypILsOZ+CPSV+YF2+7vBZ9f/",
+    );
+
+    var hmacSha256 = Hmac(sha256, key); // HMAC-SHA256
+    var digest = hmacSha256.convert(bytes);
+
+    print("HMAC digest as bytes: ${digest.bytes}");
+    print("HMAC digest as hex string: $digest");
+
+    ///
+    ///
+    var time = DateTime.fromMillisecondsSinceEpoch(130223063619);
+    print('Time is: $time');
+
+    ///
+    print('=========================================');
+    // print(json.decode())
+    var file = File('data.json');
+    var jsnStr = file.readAsStringSync();
+    var map = json.decode(jsnStr);
+    print(map);
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
