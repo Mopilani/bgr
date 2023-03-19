@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,14 @@ class MyApp extends StatelessWidget {
     ///
     var time = DateTime.fromMillisecondsSinceEpoch(130223063619);
     print('Time is: $time');
+
+    ///
+    print('=========================================');
+    // print(json.decode())
+    var file = File('data.json');
+    var jsnStr = file.readAsStringSync();
+    var map = json.decode(jsnStr);
+    print(map);
 
     return MultiProvider(
       providers: [
